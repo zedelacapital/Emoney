@@ -1,0 +1,233 @@
+{
+	"info": {
+		"_postman_id": "25bc316a-f6a6-4a03-a86d-ac3eb795dd03",
+		"name": "Emoney Provider Requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15176834"
+	},
+	"item": [
+		{
+			"name": "GetInfo",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"var request = \"GetInfo\"\r",
+							"var serviceID = pm.variables.get(\"service\")\r",
+							"var Distributor = pm.variables.get(\"Distributor\") \r",
+							"var secret = pm.variables.get(\"secret\")\r",
+							"\r",
+							"//console.log(Distributor)\r",
+							"\r",
+							"var message = request + serviceID + Distributor + secret\r",
+							"var sha256Hash =  CryptoJS.SHA256(message).toString()\r",
+							"pm.environment.set(\"sha256Hash\",sha256Hash)\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml; charset=utf-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "http://tempuri.org/IService/GetInfo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n  <soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\" xmlns:emon=\"http://schemas.datacontract.org/2004/07/EmoneyDistributorService.Common\" xmlns:emon1=\"http://schemas.datacontract.org/2004/07/EmoneyDistributorService.Model\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <tem:GetInfo>\r\n         <!--Optional:-->\r\n         <tem:request>\r\n            <!--Optional:-->\r\n            <emon:Distributor>{{Distributor}}</emon:Distributor>\r\n            <!--Optional:-->\r\n            <emon:Hash>{{sha256Hash}}</emon:Hash>\r\n            <!--Optional:-->\r\n            <emon:Parameters>\r\n               <!--Zero or more repetitions:-->\r\n               <emon1:Parameter>\r\n                  <!--Optional:-->\r\n                  <emon1:Key>service</emon1:Key>\r\n                  <!--Optional:-->\r\n                  <emon1:Value>{{service}}</emon1:Value>\r\n               </emon1:Parameter>\r\n               <emon1:Parameter>\r\n                  <!--Optional:-->\r\n                  <emon1:Key>account</emon1:Key>\r\n                  <!--Optional:-->\r\n                  <emon1:Value>{{account}}</emon1:Value>\r\n               </emon1:Parameter>\r\n               <emon1:Parameter>\r\n                  <!--Optional:-->\r\n                  <emon1:Key>description</emon1:Key>\r\n                  <!--Optional:-->\r\n                  <emon1:Value>{{description}}</emon1:Value>\r\n               </emon1:Parameter>               \r\n            </emon:Parameters>\r\n         </tem:request>\r\n      </tem:GetInfo>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+				},
+				"url": {
+					"raw": "https://api.emoney.ge/distributors/Service.svc?wsdl",
+					"protocol": "https",
+					"host": [
+						"api",
+						"emoney",
+						"ge"
+					],
+					"path": [
+						"distributors",
+						"Service.svc"
+					],
+					"query": [
+						{
+							"key": "wsdl",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTransactionInfo",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var request = \"GetTransactionInfo\"\r",
+							"var serviceID = pm.variables.get(\"service\")\r",
+							"var transactionCode = pm.variables.get(\"transactionCode\")\r",
+							"var Distributor = pm.variables.get(\"Distributor\") \r",
+							"var secret = pm.variables.get(\"secret\")\r",
+							"\r",
+							"//console.log(Distributor)\r",
+							"\r",
+							"var message = request + transactionCode + Distributor + secret\r",
+							"var sha256Hash =  CryptoJS.SHA256(message).toString()\r",
+							"pm.environment.set(\"sha256Hash\",sha256Hash)\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml; charset=utf-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "http://tempuri.org/IService/GetTransactionInfo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n  <soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\" xmlns:emon=\"http://schemas.datacontract.org/2004/07/EmoneyDistributorService.Common\" xmlns:emon1=\"http://schemas.datacontract.org/2004/07/EmoneyDistributorService.Model\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <tem:GetTransactionInfo>\r\n         <!--Optional:-->\r\n         <tem:request>\r\n            <!--Optional:-->\r\n            <emon:Distributor>{{Distributor}}</emon:Distributor>\r\n            <!--Optional:-->\r\n            <emon:Hash>{{sha256Hash}}</emon:Hash>\r\n            <!--Optional:-->\r\n            <emon:Parameters>\r\n               <!--Zero or more repetitions:-->\r\n               <emon1:Parameter>\r\n                  <!--Optional:-->\r\n                  <emon1:Key>transaction</emon1:Key>\r\n                  <!--Optional:-->\r\n                  <emon1:Value>{{transactionCode}}</emon1:Value>\r\n               </emon1:Parameter>\r\n            </emon:Parameters>\r\n         </tem:request>\r\n      </tem:GetTransactionInfo>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+				},
+				"url": {
+					"raw": "https://api.emoney.ge/distributors/Service.svc?wsdl",
+					"protocol": "https",
+					"host": [
+						"api",
+						"emoney",
+						"ge"
+					],
+					"path": [
+						"distributors",
+						"Service.svc"
+					],
+					"query": [
+						{
+							"key": "wsdl",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Request Payment",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var request = \"Pay\"\r",
+							"var amount = pm.variables.get(\"amount\")\r",
+							"var currency = pm.variables.get(\"currency\")\r",
+							"var service = pm.variables.get(\"service\")\r",
+							"var transaction = pm.variables.get(\"transaction\")\r",
+							"var customercode = pm.variables.get(\"customerCode\")\r",
+							"var Distributor = pm.variables.get(\"Distributor\") \r",
+							"var secret = pm.variables.get(\"secret\")\r",
+							"\r",
+							"//console.log(Distributor)\r",
+							"\r",
+							"// hash generation\r",
+							"var message = request + service + amount + currency + transaction + Distributor + secret\r",
+							"var sha256Hash =  CryptoJS.SHA256(message).toString()\r",
+							"pm.environment.set(\"sha256Hash\",sha256Hash)\r",
+							"\r",
+							"//VerificationPinHash Optional\r",
+							"//var request1 = \"GetInfo\"\r",
+							"//var user_private_numer_from_your_system = pm.variables.get(\"user_private_numer_from_your_system\")\r",
+							"\r",
+							"//var message1 = request1 + user_private_numer_from_your_system + Distributor + secret\r",
+							"//var sha256Hash =  CryptoJS.SHA256(message).toString()\r",
+							"//pm.environment.set(\"sha256Hash\",sha256Hash)\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml; charset=utf-8",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "http://tempuri.org/IService/Pay",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n  <soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:tem=\"http://tempuri.org/\" xmlns:emon=\"http://schemas.datacontract.org/2004/07/EmoneyDistributorService.Common\" xmlns:emon1=\"http://schemas.datacontract.org/2004/07/EmoneyDistributorService.Model\">\r\n   <soapenv:Header/>\r\n   <soapenv:Body>\r\n      <tem:Pay>\r\n         <!--Optional:-->\r\n         <tem:request>\r\n            <!--Optional:-->\r\n            <emon:Distributor>{{Distributor}}</emon:Distributor>\r\n            <!--Optional:-->\r\n            <emon:Hash>{{sha256Hash}}</emon:Hash>\r\n            <!--Optional:-->\r\n            <emon:Parameters>\r\n               <!--Zero or more repetitions:-->\r\n               <emon1:Parameter>\r\n                  <!--Optional:-->\r\n                  <emon1:Key>amount</emon1:Key>\r\n                  <!--Optional:-->\r\n                  <emon1:Value>{{amount}}</emon1:Value>\r\n               </emon1:Parameter>\r\n                <emon1:Parameter>\r\n                  <!--Optional:-->\r\n                  <emon1:Key>currency</emon1:Key>\r\n                  <!--Optional:-->\r\n                  <emon1:Value>{{currency}}</emon1:Value>\r\n               </emon1:Parameter>\r\n                <emon1:Parameter>\r\n                  <!--Optional:-->\r\n                  <emon1:Key>service</emon1:Key>\r\n                  <!--Optional:-->\r\n                  <emon1:Value>{{service}}</emon1:Value>\r\n               </emon1:Parameter>\r\n                <emon1:Parameter>\r\n                  <!--Optional:-->\r\n                  <emon1:Key>transaction</emon1:Key>\r\n                  <!--Optional:-->\r\n                  <emon1:Value>{{transaction}}</emon1:Value>\r\n               </emon1:Parameter>\r\n                  <emon1:Parameter>\r\n                  <!--Optional:-->\r\n                  <emon1:Key>account</emon1:Key>\r\n                  <!--Optional:-->\r\n                  <emon1:Value>{{customerCode}}</emon1:Value>\r\n               </emon1:Parameter>\r\n            </emon:Parameters>\r\n         </tem:request>\r\n      </tem:Pay>\r\n   </soapenv:Body>\r\n</soapenv:Envelope>"
+				},
+				"url": {
+					"raw": "https://api.emoney.ge/distributors/Service.svc?wsdl",
+					"protocol": "https",
+					"host": [
+						"api",
+						"emoney",
+						"ge"
+					],
+					"path": [
+						"distributors",
+						"Service.svc"
+					],
+					"query": [
+						{
+							"key": "wsdl",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
